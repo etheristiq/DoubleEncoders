@@ -9,13 +9,17 @@
 #include "custom_uart.h"
 #include "custom_timer.h"
 
-volatile uint16_t counter = 0;
+volatile uint16_t counter1 = 0;
+volatile uint16_t counter2 = 0;
 long time;
 
 ISR(INT0_vect){
-  counter++;
+  counter1++;
 }
 
+ISR(INT1_vect){
+  counter2++;
+}
 
 void init_interrupt(void){
 
@@ -46,7 +50,7 @@ int main(void){
       uart_send_c('\n');
       uart_send_uint(counter);  //отправляется кол-во замеченых пролётов
       tim=millis();             //обновляется время отсчёта
-      counter=0;                //обнуляется кол-во пролётов
+      counter1=0;                //обнуляется кол-во пролётов
       sei();                    //включается прерывания
     }
   }
